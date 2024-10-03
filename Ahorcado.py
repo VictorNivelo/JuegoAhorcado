@@ -98,17 +98,23 @@ def ingreso_texto(pregunta):
                     return texto_ingresado
                 elif evento.key == pygame.K_BACKSPACE:
                     texto_ingresado = texto_ingresado[:-1]
+                elif evento.key == pygame.K_ESCAPE:
+                    return None
                 else:
                     texto_ingresado += evento.unicode.upper()
         pygame.display.flip()
 
 
 def agregar_palabra():
-    nueva_palabra = ingreso_texto("Introduce la nueva palabra:")
-    if nueva_palabra:
+    while True:
+        nueva_palabra = ingreso_texto("Introduce la nueva palabra:")
+        if nueva_palabra is None:
+            return
         nueva_pista = ingreso_texto("Introduce la pista para la palabra:")
-        if nueva_pista:
-            guardar_palabra(nueva_palabra, nueva_pista)
+        if nueva_pista is None:
+            return
+        guardar_palabra(nueva_palabra, nueva_pista)
+        break
 
 
 def menu_principal():
